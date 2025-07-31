@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from 'axios';
 import {
   BarChart,
   Bar,
@@ -18,8 +19,9 @@ import {
 import { Moon, Sun, RefreshCw, Star } from "lucide-react";
 import "./style.css";
 import UnauthenticatedNavbar from "../components/unauthnavbar";
-// Sample data (unchanged for brevity)
+
 const mockExpenseData = {
+
   summary: { total: 4250.75, monthlyAverage: 1416.92, monthlyChange: 12.5 },
   monthlyExpenses: [
     { month: "Jan", amount: 1250.5 },
@@ -95,8 +97,7 @@ const mockExpenseData = {
       description: "Internet bill",
     },
   ],
-  // Added for gamification
-  goals: { current: 75, target: 100 }, // Example goal data
+  goals: { current: 75, target: 100 }, 
   badges: [
     { id: 1, name: "Frugal Foodie", earned: true },
     { id: 2, name: "Savings Star", earned: false },
@@ -119,6 +120,27 @@ export default function ExpenseDashboard() {
     user: "current",
   });
   const [showCoin, setShowCoin] = useState(false); // For coin animation
+  const [botid,setbotid] =useState('');
+  const [expensesdata,setexpensesdata]=useState(null);
+  const [error,seterror]=useState(null);
+
+   const handlesubmitbotid=async()=>{
+    if(botid.trim()===''){
+      alert("Please enter a valid bot ID");
+      return;
+    }
+    try{
+      const response=await axios.post(process.env.react_url+'/getexpenses/fetch',{botid:botid});
+      if (response.data.success){
+        setexpensesdata(response.data.expenses);
+      }
+    }
+    catch(error){
+      console.error("Error fetching expenses:", error);
+      seterror("Failed to fetch expenses. Please try again.");
+    }
+    
+   }
 
   useEffect(() => {
     const loadData = async () => {
@@ -255,6 +277,32 @@ return (
           </button>
         </div>
       </header>
+      <div className="p-4 mx-auto max-w-3xl">
+        <p >To fetch your expenses paste your telegrram bot-id </p>
+        <input type="text" name="botid" id="botid"
+        value={botid}
+        onChange={(e)=>setbotid(e.target.value)}
+        className="w-full p-2 border rounded-md mb-4 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        />
+        <button onClick={handlesubmitbotid}>Submit</button>
+      </div>
+{/* Show expenses data if available */}
+      {/* {expensesdata && (
+  <div className="mt-4 p-4 border dark:border-gray-700 rounded-md bg-white dark:bg-gray-800">
+    <h2 className="text-lg font-bold mb-2">Expenses:</h2>
+    <ul>
+      {expensesdata.map((expense, index) => (
+        <li key={index} className="mb-1">
+          ₹{expense.amount} — {expense.category} ({new Date(expense.date).toLocaleDateString()})
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+{error && (
+  <div className="text-red-500 mt-4">{error}</div>
+)} */}
+
 
       {/* Goals Widget */}
       <section
