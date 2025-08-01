@@ -77,7 +77,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* How It Works */}
+        {/* How It Works
         <div className="mb-20">
           <h2 className="text-4xl font-bold text-gray-800 mb-12 text-center">How It Works</h2>
           <div className="bg-white rounded-2xl p-8 max-w-6xl mx-auto shadow-xl border border-gray-100">
@@ -86,37 +86,37 @@ const About = () => {
                 {
                   step: 'Voice Input',
                   desc: 'Users send voice messages via Telegram.',
-                  img: '/images/voice-input.png', // Placeholder path
+                  img: img_1,
                   alt: 'User sending voice message',
                 },
                 {
                   step: 'Transcription',
                   desc: 'VoiceMate AI converts voice to text using advanced speech recognition.',
-                  img: '/images/transcription.png',
+                  img: img_6,
                   alt: 'Voice being transcribed to text',
                 },
                 {
                   step: 'AI Processing',
                   desc: 'The chatbot processes the text with custom NLP logic.',
-                  img: '/images/ai-processing.png',
+                  img: img_2,
                   alt: 'AI analyzing text input',
                 },
                 {
                   step: 'Response',
                   desc: 'Users receive responses as text or voice (TTS).',
-                  img: '/images/response.png',
+                  img: img_3,
                   alt: 'AI delivering voice or text response',
                 },
                 {
                   step: 'Data Storage',
                   desc: 'All interactions are logged in our secure database.',
-                  img: '/images/data-storage.png',
+                  img: img_4,
                   alt: 'Data being saved in database',
                 },
                 {
                   step: 'Dashboard Access',
                   desc: 'Admins view and analyze data via the dashboard.',
-                  img: '/images/dashboard.png',
+                  img: img_5,
                   alt: 'Admin reviewing analytics dashboard',
                 },
               ].map((step, idx) => (
@@ -136,7 +136,7 @@ const About = () => {
             </div>
           </div>
         </div>
-
+ */}
         {/* Get Started */}
         <div className="text-center">
           <h2 className="text-4xl font-bold text-gray-800 mb-6">Get Started Today</h2>

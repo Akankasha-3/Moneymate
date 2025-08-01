@@ -39,6 +39,10 @@ const UnauthenticatedNavbar = () => {
           >
             User Flow
           </Link>
+          <Link
+            to="/duplicate-dashboard"
+            className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">
+            Duplicate Dashboard</Link>
         </div>
       </nav>
     </header>
