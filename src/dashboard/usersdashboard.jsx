@@ -130,7 +130,10 @@ export default function ExpenseDashboard() {
       return;
     }
     try{
-      const response=await axios.post(process.env.react_url+'/getexpenses/fetch',{botid:botid});
+      const backendURL = process.env.REACT_APP_URL;
+
+      const response= await axios.get(`${backendURL}/userdash/getexpenses?botid=${botid}`)
+      console.log("Response from backend:", response.data);
       if (response.data.success){
         setexpensesdata(response.data.expenses);
       }
@@ -284,15 +287,15 @@ return (
         onChange={(e)=>setbotid(e.target.value)}
         className="w-full p-2 border rounded-md mb-4 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         />
-        <button onClick={handlesubmitbotid}>Submit</button>
+        <button onClick={handlesubmitbotid} className="cursor-pointer">Submit</button>
       </div>
-{/* Show expenses data if available */}
-      {/* {expensesdata && (
-  <div className="mt-4 p-4 border dark:border-gray-700 rounded-md bg-white dark:bg-gray-800">
-    <h2 className="text-lg font-bold mb-2">Expenses:</h2>
+      {/* Shw expenses */}
+       {expensesdata && (
+  <div className="mt-4 p-[] border dark:border-gray-700 rounded-md bg-white dark:bg-gray-800">
+    <h2 className="text-lg text-white font-bold mb-2">Expenses:</h2>
     <ul>
       {expensesdata.map((expense, index) => (
-        <li key={index} className="mb-1">
+        <li key={index} className="mb-1  text-white dark:text-gray-300">
           ₹{expense.amount} — {expense.category} ({new Date(expense.date).toLocaleDateString()})
         </li>
       ))}
@@ -301,7 +304,7 @@ return (
 )}
 {error && (
   <div className="text-red-500 mt-4">{error}</div>
-)} */}
+)}
 
 
       {/* Goals Widget */}
