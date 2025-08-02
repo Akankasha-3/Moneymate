@@ -9,7 +9,7 @@ export default function DuplicateDashboard() {
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const limit = 15;
-
+//Fetch expenses and recent transactions using botid
   const handlesubmitbotid = async () => {
     if (botid.trim() === '') {
       alert("Please enter a valid bot ID");
@@ -22,6 +22,7 @@ export default function DuplicateDashboard() {
 
       if (response.data.success) {
         setexpensesdata(response.data.expenses);
+        console.log(response.data.expenses);
         seterror(null);
         setOffset(limit);
         setHasMore(response.data.expenses.length === limit); // more if full page
@@ -57,6 +58,9 @@ export default function DuplicateDashboard() {
       seterror("Something went wrong while loading more data.");
     }
   };
+
+  // caluclate total expenses
+const totalexpenses=expensesdata.reduce((total,e)=> total+e.amount,0);
 
   return (
     <div>
@@ -122,6 +126,9 @@ export default function DuplicateDashboard() {
             )}
           </div>
         </section>
+        <div className="display expenses ">
+          <h2 className="text-lg font-semibold mt-6">Total Expenses: {totalexpenses}</h2>
+        </div>
       </div>
     </div>
   );
