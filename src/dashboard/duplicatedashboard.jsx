@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 import UnauthenticatedNavbar from "../components/unauthnavbar";
+import { MdDelete } from "react-icons/md";
 import axios from 'axios';
 
 export default function DuplicateDashboard() {
@@ -67,6 +68,21 @@ export default function DuplicateDashboard() {
       seterror("Something went wrong while loading more data.");
     }
   };
+
+  const handledelteremainders=async(index)=>{
+    const backendURL=process.env.REACT_APP_URL;
+    try{
+      const response=await axios.post(`${backendURL}/userdash/getexpenses/deleteremainders`,{botid,index})
+      if(response.data.success){
+        setRemainders((prev)=>prev.filter((_,i) => i!==index));
+        console.log("Remainder deleted successfully");
+      }
+
+    }
+    catch(error){
+      seterror("Failed to delete reminder. Please try again.");
+    }
+  }
 
   // caluclate total expenses
 useEffect(() => {
@@ -206,6 +222,7 @@ useEffect(() => {
                             <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{expense.date}</p>
                             <p className="text-xs text-blue-600 dark:text-blue-400">{expense.frequency}</p>
                           </div>
+                          <button onClick={()=>handledeleterecurringexpenses(index)}></button>
                         </div>
                       </div>
                     ))}
@@ -240,6 +257,7 @@ useEffect(() => {
                             <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{reminder.date}</p>
                             <p className="text-xs text-orange-600 dark:text-orange-400">{reminder.duration} days</p>
                           </div>
+                          <button  className="text-xl" onClick={() => handledelteremainders(index)}><MdDelete /></button>
                         </div>
                       </div>
                     ))}
