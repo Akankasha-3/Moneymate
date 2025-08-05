@@ -28,6 +28,7 @@ export default function DuplicateDashboard() {
         setexpensesdata(response.data.expenses);
         console.log(response.data.expenses);
         setRecurringExpenses(response.data.recurringexpenses || []);
+        console.log('recurring expenses:',response.data.recurringexpenses);
         setRemainders(response.data.remainders || []);
         console.log('remainders:',response.data.remainders);
         settotalexpenses(response.data.totalexpenses);
@@ -68,7 +69,20 @@ export default function DuplicateDashboard() {
       seterror("Something went wrong while loading more data.");
     }
   };
+  const handledeleterecurringexpenses=async(index)=>{
+    const backendURL=process.env.REACT_APP_URL;
+    try{
+      const response=await axios.post(`${backendURL}/userdash/getexpenses/deleterecurringexpense`,{botid,index})
+      if(response.data.success){
+        setRecurringExpenses((prev)=>prev.filter((_,i) => i!==index));
+        console.log("Recurringexpense deleted successfully");
+      }
 
+    }
+    catch(error){
+      seterror("Failed to delete reccuring expenses. Please try again.");
+    }
+  }
   const handledelteremainders=async(index)=>{
     const backendURL=process.env.REACT_APP_URL;
     try{
@@ -222,7 +236,7 @@ useEffect(() => {
                             <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{expense.date}</p>
                             <p className="text-xs text-blue-600 dark:text-blue-400">{expense.frequency}</p>
                           </div>
-                          <button onClick={()=>handledeleterecurringexpenses(index)}></button>
+                          <button className="text-xl" onClick={()=>handledeleterecurringexpenses(index)}><MdDelete/></button>
                         </div>
                       </div>
                     ))}
