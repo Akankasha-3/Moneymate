@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import UnauthenticatedNavbar from "../components/unauthnavbar";
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ export default function DuplicateDashboard() {
   const [hasMore, setHasMore] = useState(false);
   const [recurringexpenses, setRecurringExpenses] = useState([]);
   const [remainders, setRemainders] = useState([]);
-
+  const [totalexpenses,settotalexpenses]=useState(0);
   const limit = 15;
 //Fetch expenses and recent transactions using botid
   const handlesubmitbotid = async () => {
@@ -28,6 +28,9 @@ export default function DuplicateDashboard() {
         console.log(response.data.expenses);
         setRecurringExpenses(response.data.recurringexpenses || []);
         setRemainders(response.data.remainders || []);
+        console.log('remainders:',response.data.remainders);
+        settotalexpenses(response.data.totalexpenses);
+        console.log("Total Expenses:", totalexpenses);
       
         seterror(null);
         setOffset(limit);
@@ -66,8 +69,9 @@ export default function DuplicateDashboard() {
   };
 
   // caluclate total expenses
-const totalexpenses=expensesdata.reduce((total,e)=> total+e.amount,0);
-
+useEffect(() => {
+  console.log("Total Expenses (updated):", totalexpenses);
+}, [totalexpenses]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
