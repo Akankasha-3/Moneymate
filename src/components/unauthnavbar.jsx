@@ -15,30 +15,12 @@ const UnauthenticatedNavbar = () => {
           >
             Home
           </Link>
-          <Link
-            to="/services"
-            className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition duration-300"
-          >
-            Services
-          </Link>
-          <Link
-            to="/login"
-            className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition duration-300"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition duration-300"
-          >
-            Signup
-          </Link>
-          <Link
+          {/* <Link
             to="/userdash"
             className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition duration-300"
           >
             User Flow
-          </Link>
+          </Link> */}
           <Link
             to="/duplicate-dashboard"
             className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition duration-300">
