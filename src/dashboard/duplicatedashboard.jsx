@@ -2,6 +2,9 @@ import { useState,useEffect } from "react";
 import UnauthenticatedNavbar from "../components/unauthnavbar";
 import { MdDelete } from "react-icons/md";
 import axios from 'axios';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function DuplicateDashboard() {
   const [botid, setbotid] = useState('');
@@ -12,6 +15,8 @@ export default function DuplicateDashboard() {
   const [recurringexpenses, setRecurringExpenses] = useState([]);
   const [remainders, setRemainders] = useState([]);
   const [totalexpenses,settotalexpenses]=useState(0);
+  const [piechartdata,setpiechartdata]=useState({});
+
   const limit = 15;
 //Fetch expenses and recent transactions using botid
   const handlesubmitbotid = async () => {
@@ -98,10 +103,42 @@ export default function DuplicateDashboard() {
     }
   }
 
+  const caluclatepiechartdata=()=>{
+
+    const categoryexpenses=expensesdata.reduce((arr,expense)=>{
+      arr[expense.category]=(arr[expense.category]|| 0)+expense.amount;
+      return arr;
+    },{});
+    const chartdata={
+      'labels':Object.keys(categoryexpenses),
+      'datasets':[{
+        label: 'Expenses by Category',
+        data:Object.values(categoryexpenses),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ]
+      }]
+    }
+    setpiechartdata(chartdata);
+    console.log("Pie Chart Data:", chartdata);
+    
+  }
   // caluclate total expenses
 useEffect(() => {
   console.log("Total Expenses (updated):", totalexpenses);
-}, [totalexpenses]);
+}, [totalexpenses],
+);
+
+useEffect(()=>{
+  if (expensesdata.length>0){
+    caluclatepiechartdata();
+  }
+},[expensesdata]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -283,6 +320,16 @@ useEffect(() => {
                 )}
               </div>
             </div>
+            {/* Category-wise Pie Chart */}
+<div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Expenses by Category</h3>
+  {piechartdata && piechartdata.labels && piechartdata.labels.length > 0 ? (
+    <Pie data={piechartdata} />
+  ) : (
+    <p className="text-gray-500 dark:text-gray-400">No category data available.</p>
+  )}
+</div>
+
           </div>
         </div>
       </div>
