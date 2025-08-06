@@ -8,11 +8,7 @@ const App = () => {
     <Router>
       <Routes>
          <Route path="/" element={<Home />} />
-        {/*
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} /> */}
-        <Route path="/userdash" element={<UsersDashboard />} /> {/* Corrected to uppercase */}
-        {/* <Route path="/oauth-callback" element={<OAuthCallback />} /> */}
+      
         <Route path="/duplicate-dashboard" element={<DuplicateDashboard />} />
       </Routes>
     </Router>
