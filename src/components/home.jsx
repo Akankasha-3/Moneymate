@@ -1,9 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UnauthenticatedNavbar from "./unauthnavbar";
 import Footer from "./footer";
 
 function App() {
+  const navigate = useNavigate();
+
+  const handleNewUserClick = () => {
+    navigate("/telegram-guide");
+  };
+
   return (
     <div className="font-sans text-gray-800">
       {/* Navbar */}
@@ -18,11 +24,19 @@ function App() {
           <p className="text-lg text-gray-700 mb-6">
             Track your expenses, visualize spending, get predictions, and automate alerts – all in one app powered by Telegram Bot.
           </p>
-          <Link to="/duplicate-dashboard">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg transition">
-              Get Started
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+            <Link to="/duplicate-dashboard">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg transition">
+                Get Started
+              </button>
+            </Link>
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg transition"
+              onClick={handleNewUserClick}
+            >
+              New User?
             </button>
-          </Link>
+          </div>
         </div>
 
         <div className="hidden md:block">
@@ -43,8 +57,6 @@ function App() {
           <FeatureCard title="Smart Alerts" desc="Get notified when you overspend or trends shift unexpectedly." />
         </div>
       </section>
-
-      
 
       {/* Footer */}
       <Footer />
