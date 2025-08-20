@@ -6,6 +6,8 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+
+
 export default function DuplicateDashboard() {
   const [botid, setBotid] = useState('');
   const [expensesdata, setExpensesdata] = useState([]);
@@ -27,7 +29,8 @@ export default function DuplicateDashboard() {
     }
 
     try {
-      const backendURL = 'https://fintrackbot-1.onrender.com';
+      const backendURL = process.env.REACT_APP_URL;
+      // console.log(backendURL);
       const response = await axios.post(`${backendURL}/userdash/getexpenses`, { botid, offset: 0, limit });
 
       if (response.data.success) {
