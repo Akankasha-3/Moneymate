@@ -29,7 +29,7 @@ export default function DuplicateDashboard() {
     }
 
     try {
-      const backendURL = process.env.REACT_APP_URL;
+      const backendURL ='https://fintrackbot-1.onrender.com';
       // console.log(backendURL);
       const response = await axios.post(`${backendURL}/userdash/getexpenses`, { botid, offset: 0, limit });
 
